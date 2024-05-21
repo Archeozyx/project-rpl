@@ -16,18 +16,18 @@
   <x-header>Homepage</x-header>
 
     <div class="container">
-      <div class="row">
         <div class="col-md-12 pt-3 text-center">
-          <img src="{{ asset('images/home.png') }}" alt="pemandangan" class="rounded" style="width: 65%;">
+          <img src="{{ asset('images/home-img.jpeg') }}" alt="pemandangan" class="rounded" style="width: 50%; box-shadow: 0px 6px 12px gray;" />
+          <div class="p-4">
+          <h1 class="display-4">Selamat Datang</h1>
+          <h2 class="display-6">di Desa Tingkir Lor</h2>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="container">
       <div class="row justify-content-center ms-3">
-        <div class="col-md-8 mt-3 ms-3">
-          <h3></h3>
-        </div>
         <div class="col-md-8">
           <p class="p-2" style="font-size: 18px;">
             Tingkir Lor adalah sebuah desa berbasis wisata yang berada di Kelurahan Tingkir Lor, Kecamatan Tingkir, Kota Salatiga, Provinsi Jawa Tengah.<br><br> Desa Wisata Tingkir Lor memiliki lanskap alam yang indah mulai dari gunung-gunung hingga area persawahan yang hijau. Lokasinya hanya 300 meter di sisi barat pintu keluar Tol Salatiga. Selain wisata alam, Desa Tingkir lor terdapat makam Mbah Abdul Wahid yang merupakan canggah KH Abdurrahman Wahid, atau Gus Dur. Wisatawan juga dapat mencoba paket wisata bersepeda dengan suasana pedesaan yang asri dan sejuk.
