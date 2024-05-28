@@ -42,4 +42,12 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
 
     // Laporan Pemesanan Tiket
     Route::get('/laporan', [AdminController::class, 'laporanPemesanan'])->name('admin.laporan');
+
+    // User Management
+    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
+    Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+    Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
 });
