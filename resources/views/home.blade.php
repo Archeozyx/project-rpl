@@ -25,7 +25,7 @@
         <h1 class="display-4">Selamat Datang</h1>
         <h2 class="display-6">di Desa Tingkir Lor</h2>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path fill="#f6f1f1" fill-opacity="1"
+          <path fill="#ffffff" fill-opacity="1"
             d="M0,0L40,26.7C80,53,160,107,240,122.7C320,139,400,117,480,133.3C560,149,640,203,720,197.3C800,192,880,128,960,112C1040,96,1120,128,1200,122.7C1280,117,1360,75,1400,53.3L1440,32L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">
           </path>
         </svg>
@@ -123,7 +123,7 @@
     </svg>
   </section>
 
-  <footer class="pb-5 text-white text-center " style="background-color: #273044;">
+  <footer class="pb-5 text-white text-center" style="background-color: #273044;">
     <h4 class="display-7">Desa Wisata Tingkir Lor</h4>
     <a href="https://www.instagram.com/desawisata_tingkirlor/" class="text-white fw-bold">Instagram <i
         class="bi bi-instagram"></i></a>
