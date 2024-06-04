@@ -34,7 +34,9 @@
                                 melalui wisata religi di Makam Mbah Abdul Wahid.
                             </p>
 
-                            <button type="button" class="btn btn-primary mt-5">Pesan Tiket</button>
+                            <a></a>
+                            <a href="{{ route('pesantiket') }}" class="btn btn-primary mt-5" role="button">Pesan
+                                Tiket</a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +68,8 @@
                                 Dur. 
                             </p>
 
-                            <button type="button" class="btn btn-primary mt-5">Pesan Tiket</button>
+                            <a href="{{ route('pesantiket') }}" class="btn btn-primary mt-5" role="button">Pesan
+                                Tiket</a>
                         </div>
                     </div>
                 </div>
@@ -100,7 +103,8 @@
                                 merasakan langsung keajaiban proses pembuatan coklat dan tempe!
                             </p>
 
-                            <button type="button" class="btn btn-primary mt-5">Pesan Tiket</button>
+                            <a href="{{ route('pesantiket') }}" class="btn btn-primary mt-5" role="button">Pesan
+                                Tiket</a>
                         </div>
                     </div>
                 </div>
@@ -133,7 +137,8 @@
                                 Gamelan.
                             </p>
 
-                            <button type="button" class="btn btn-primary mt-5">Pesan Tiket</button>
+                            <a href="{{ route('pesantiket') }}" class="btn btn-primary mt-5" role="button">Pesan
+                                Tiket</a>
                         </div>
                     </div>
                 </div>
