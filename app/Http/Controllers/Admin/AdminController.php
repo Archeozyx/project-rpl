@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -15,37 +17,31 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function homepageInfo()
+    public function pageInfo($slug)
     {
-        
-        return view('admin.homepage');
+        $page = Page::where('slug', $slug)->firstOrFail();
+        return view('admin.page', compact('page'));
     }
 
-    public function updateHomepageInfo(Request $request)
+    public function updatePageInfo(Request $request, $slug)
     {
-        
+        $page = Page::where('slug', $slug)->firstOrFail();
+        $page->content = $request->input('content');
+        $page->save();
+        return redirect()->route('admin.page', $slug)->with('success', 'Page updated successfully.');
     }
 
-    public function wisataInfo()
+    public function uploadImage(Request $request)
     {
-        
-        return view('admin.wisata');
-    }
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('uploads', $filename, 'public');
 
-    public function updateWisataInfo(Request $request)
-    {
-        
-    }
+            return response()->json(['url' => asset('storage/' . $path)]);
+        }
 
-    public function pemesananInfo()
-    {
-        
-        return view('admin.pemesanan');
-    }
-
-    public function updatePemesananInfo(Request $request)
-    {
-        
+        return response()->json(['error' => 'No image found'], 400);
     }
 
     public function laporanPemesanan()
@@ -54,11 +50,24 @@ class AdminController extends Controller
         return view('admin.laporan');
     }
 
-    public function users()
-    {
-        $users = User::all();
-        return view('admin.users', compact('users'));
+    public function users(Request $request)
+{
+    $search = $request->input('search');
+    $perPage = 10; // Number of users to display per page
+
+    $users = User::query();
+
+    if ($search) {
+        $users->where(function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%');
+        });
     }
+
+    $users = $users->paginate($perPage);
+
+    return view('admin.users', compact('users', 'search'));
+}
 
     public function createUser()
     {

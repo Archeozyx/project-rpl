@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -20,25 +21,18 @@ Route::get('/wisata', function () {
     return view('wisata');
 })->name('wisata');
 
-Route::get('/pesan', function () {
-    return view('pesan');
-})->middleware('auth')->name('pesan');
+Route::get('/pesan', [OrderController::class, 'showOrderForm'])->middleware('auth')->name('pesan');
+Route::post('/pesan', [OrderController::class, 'pesan']);
+
+Route::post('/admin/upload', [AdminController::class, 'uploadImage'])->name('admin.upload');
 
 // Admin Routes
 Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
 
-    // Kelola Informasi Homepage
-    Route::get('/home', [AdminController::class, 'homepageInfo'])->name('admin.home');
-    Route::post('/home', [AdminController::class, 'updateHomepageInfo']);
-
-    // Kelola Informasi Page Wisata
-    Route::get('/wisata', [AdminController::class, 'wisataInfo'])->name('admin.wisata');
-    Route::post('/wisata', [AdminController::class, 'updateWisataInfo']);
-
-    // Kelola Informasi Page Pemesanan Tiket
-    Route::get('/pemesanan', [AdminController::class, 'pemesananInfo'])->name('admin.pemesanan');
-    Route::post('/pemesanan', [AdminController::class, 'updatePemesananInfo']);
+    // Kelola Informasi page
+    Route::get('/edit/{slug}', [AdminController::class, 'pageInfo'])->name('admin.page');
+    Route::post('/edit/{slug}', [AdminController::class, 'updatePageInfo'])->name('admin.page.update');
 
     // Laporan Pemesanan Tiket
     Route::get('/laporan', [AdminController::class, 'laporanPemesanan'])->name('admin.laporan');

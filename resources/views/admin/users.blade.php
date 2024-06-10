@@ -5,6 +5,13 @@
 
     <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Create User</a>
 
+    <form action="{{ route('admin.users') }}" method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search users..." value="{{ $search }}">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
     <table class="table">
         <thead>
             <tr>
@@ -32,4 +39,6 @@
             @endforeach
         </tbody>
     </table>
+
+    {{ $users->appends(['search' => $search])->links() }}
 @endsection
