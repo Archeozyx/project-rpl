@@ -1,5 +1,5 @@
 @extends('layout')
 
 @section('content')
-    {!! File::get(base_path($filePath)) !!}
+    {!! Blade::render(File::get(base_path($filePath)), ['filePath' => $filePath]) !!}
 @endsection
