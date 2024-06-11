@@ -11,6 +11,6 @@ class Page extends Model
     
     protected $fillable = [
         'slug',
-        'content'
+        'file_path'
     ];
 }

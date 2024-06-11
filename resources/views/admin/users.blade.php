@@ -3,11 +3,11 @@
 @section('content')
     <h1>User Management</h1>
 
-    <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Create User</a>
+    <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Buat User</a>
 
     <form action="{{ route('admin.users') }}" method="GET" class="mb-3">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Search users..." value="{{ $search }}">
+            <input type="text" name="search" class="form-control" placeholder="Cari users..." value="{{ $search }}">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>

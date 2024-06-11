@@ -6,9 +6,13 @@
     <form action="{{ route('admin.page.update', $page->slug) }}" method="POST">
         @csrf
 
+        <input type="hidden" name="file_path" value="{{ $page->file_path }}">        
+
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea name="content" id="summernote">{!! $page->content !!}</textarea>
+            <textarea name="content" id="summernote">
+                {!! File::get(base_path($page->file_path)) !!}
+            </textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>

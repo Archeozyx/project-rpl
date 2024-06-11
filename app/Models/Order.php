@@ -18,5 +18,6 @@ class Order extends Model
         'tickets',
         'date',
         'time',
+        'status',
     ];
 }

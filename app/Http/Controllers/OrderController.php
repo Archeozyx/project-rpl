@@ -25,6 +25,7 @@ class OrderController extends Controller
         $ticketOrder->tickets = $request->input('tickets');
         $ticketOrder->date = $request->input('date');
         $ticketOrder->time = $request->input('time');
+        $ticketOrder->status = 'pending';
         $ticketOrder->save();
 
         return redirect()->route('pesan');

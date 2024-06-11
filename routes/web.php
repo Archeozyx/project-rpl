@@ -6,10 +6,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Models\Page;
+use Illuminate\Support\Facades\File;
 
 Route::get('/', function () {
-    return view('home');
+    $page = Page::where('slug', 'home')->firstOrFail();
+    return view('dynamic', ['filePath' => $page->file_path]);
 })->name('home');
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -18,10 +22,15 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->na
 Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/wisata', function () {
-    return view('wisata');
+    $page = Page::where('slug', 'wisata')->firstOrFail();
+    return view('dynamic', ['filePath' => $page->file_path]);
 })->name('wisata');
 
-Route::get('/pesan', [OrderController::class, 'showOrderForm'])->middleware('auth')->name('pesan');
+
+Route::get('/pesan', function () {
+    $page = Page::where('slug', 'pesan')->firstOrFail();
+    return view('dynamic', ['filePath' => $page->file_path]);
+})->middleware('auth')->name('pesan');
 Route::post('/pesan', [OrderController::class, 'pesan']);
 
 Route::post('/admin/upload', [AdminController::class, 'uploadImage'])->name('admin.upload');
@@ -31,11 +40,14 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
 
     // Kelola Informasi page
+    Route::get('/edit', [AdminController::class, 'editablePages'])->name('admin.editable-pages');
     Route::get('/edit/{slug}', [AdminController::class, 'pageInfo'])->name('admin.page');
     Route::post('/edit/{slug}', [AdminController::class, 'updatePageInfo'])->name('admin.page.update');
 
     // Laporan Pemesanan Tiket
-    Route::get('/laporan', [AdminController::class, 'laporanPemesanan'])->name('admin.laporan');
+    Route::get('/report', [AdminController::class, 'orderReport'])->name('admin.report');
+    Route::get('/report/{order}/edit', [AdminController::class, 'editReport'])->name('admin.report.edit');
+    Route::put('/report/{order}', [AdminController::class, 'updateReport'])->name('admin.report.update');
 
     // User Management
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');

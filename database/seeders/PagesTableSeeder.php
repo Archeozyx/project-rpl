@@ -15,9 +15,9 @@ class PagesTableSeeder extends Seeder
     {
         //
         $pages = [
-            ['slug' => 'home', 'content' => '<h1>Welcome to the Homepage</h1>'],
-            ['slug' => 'wisata', 'content' => '<h1>Wisata Page</h1>'],
-            ['slug' => 'pesan', 'content' => '<h1>Pesan Page</h1>'],
+            ['slug' => 'home', 'file_path' => 'resources/views/home.blade.php'],
+            ['slug' => 'pesan', 'file_path' => 'resources/views/pesan.blade.php'],
+            ['slug' => 'wisata', 'file_path' => 'resources/views/wisata.blade.php'],
         ];
         foreach ($pages as $page) {
             Page::create($page);

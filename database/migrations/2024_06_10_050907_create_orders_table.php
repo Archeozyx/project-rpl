@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('tickets');
             $table->date('date');
             $table->time('time');
+            $table->string('status');
             $table->timestamps();
         });
     }

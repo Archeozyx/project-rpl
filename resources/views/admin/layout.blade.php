@@ -21,7 +21,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.users') }}">Users</a>
                 </li>
-                <!-- Add more navigation items as needed -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.report') }}">Laporan Pemesanan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.editable-pages') }}">Editable Pages</a>
+                </li>
+                <!-- ... -->
             </ul>
         </div>
     </nav>
