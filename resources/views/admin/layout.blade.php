@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -20,7 +21,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.users') }}">Users</a>
                 </li>
-                <!-- Add more navigation items as needed -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.report') }}">Laporan Pemesanan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.editable-pages') }}">Editable Pages</a>
+                </li>
+                <!-- ... -->
             </ul>
         </div>
     </nav>
@@ -29,8 +36,10 @@
         @yield('content')
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.js"></script>
+    @yield('scripts')
 </body>
 </html>
