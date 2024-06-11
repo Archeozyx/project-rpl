@@ -57,3 +57,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
     Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
 });
+
+Route::get('/pesantiket', function () {
+    return view('pesantiket');
+})->name('pesantiket');

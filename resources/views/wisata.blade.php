@@ -34,7 +34,6 @@
                                 melalui wisata religi di Makam Mbah Abdul Wahid.
                             </p>
 
-                            <a></a>
                             <a href="{{ route('pesan') }}" class="btn btn-primary mt-5" role="button">Pesan
                                 Tiket</a>
                         </div>
@@ -67,8 +66,7 @@
                                 Asyari, KH Abdul Wahid Hasyim dan selanjutnya KH Abdurrahman Wahid atau Gus
                                 Dur. 
                             </p>
-
-                            <a></a>
+                            
                             <a href="{{ route('pesan') }}" class="btn btn-primary mt-5" role="button">Pesan
                                 Tiket</a>
                         </div>
@@ -104,7 +102,6 @@
                                 merasakan langsung keajaiban proses pembuatan coklat dan tempe!
                             </p>
 
-                            <a></a>
                             <a href="{{ route('pesan') }}" class="btn btn-primary mt-5" role="button">Pesan
                                 Tiket</a>
                         </div>
@@ -138,8 +135,7 @@
                                 terlupakan dalam perjalanan budaya Anda bersama Paket Wisata Budaya Nabuh
                                 Gamelan.
                             </p>
-
-                            <a></a>
+                            
                             <a href="{{ route('pesan') }}" class="btn btn-primary mt-5" role="button">Pesan
                                 Tiket</a>
                         </div>
