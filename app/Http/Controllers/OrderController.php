@@ -16,15 +16,26 @@ class OrderController extends Controller
 
     public function pesan(Request $request)
     {
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|string|min:8',
+            'event' => 'required|string|max:30',
+            'tickets' => 'required|integer|min:1',
+            'date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+        ]);
+
         $ticketOrder = new Order();
         $ticketOrder->user_email = Auth::user()->email;
-        $ticketOrder->name = $request->input('name');
-        $ticketOrder->email = $request->input('email');
-        $ticketOrder->phone = $request->input('phone');
-        $ticketOrder->event = $request->input('event');
-        $ticketOrder->tickets = $request->input('tickets');
-        $ticketOrder->date = $request->input('date');
-        $ticketOrder->time = $request->input('time');
+        $ticketOrder->name = $validatedData['name'];
+        $ticketOrder->email =  $validatedData['email'];
+        $ticketOrder->phone = $validatedData['phone'];
+        $ticketOrder->event = $validatedData['event'];
+        $ticketOrder->tickets = $validatedData['tickets'];
+        $ticketOrder->date = $validatedData['date'];
+        $ticketOrder->time = $validatedData['time'];
         $ticketOrder->status = 'pending';
         $ticketOrder->save();
 
