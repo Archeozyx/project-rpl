@@ -15,13 +15,18 @@
             background: rgb(39, 48, 68);
             background: linear-gradient(90deg, rgba(39, 48, 68, 1) 16%, rgba(226, 237, 255, 1) 76%);
         }
+        .red {
+            color: red;
+        }
+        .highlight {
+            background-color: rgba(243, 255, 92, 0.8);
+            color: #000;
+        }
     </style>
 
 </head>
 
 <body>
-
-
     <x-navbar></x-navbar>
     <!-- hero -->
     <div class="container-flex jumbotron"
@@ -33,13 +38,14 @@
             <div class="col-12 text-center mt-2 mb-2">
                 <h5>Beri tahu kami apa masalah mu</h5>
             </div>
+            <!-- FORM SEARCH -->
             <div class="col-12 d-flex justify-content-center">
-                <form action="{{ route('dokumentasi') }}" method="GET" id="form-search" class="d-flex" role="search">
-                    <input id="keyword" class="form-control me-2" type="search" name="q" placeholder="Search"
+                <form id="searchBox" class="d-flex">
+                    <input id="searchInput" class="form-control me-2" type="text" placeholder="Search"
                         aria-label="Search">
-                    <button class="btn btn-outline-dark" value="Cari" type="submit">Search</button>
                 </form>
             </div>
+            <!-- FORM SEARCH -->
         </div>
     </div>
 
@@ -164,7 +170,7 @@
         </div>
     </div>
 
-    <div class="container" id="content">
+    <div class="container">
         <div class="row">
             <div class="col text-center mb-3 ms-5">
                 <h3 id="login-page">Panduan Penggunaan Website</h3>
@@ -173,98 +179,68 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center">
-            <div class="col-8 mb-5">
+            <div id="content" class="col-8 mb-5 search-text">
                 <h5>Halaman Login</h5>
-                <ul>
-                    <li>
-                        Halaman login digunakan oleh pengguna dan admin untuk masuk ke sistem.
-                    </li>
-                    <li>
-                        Pengguna memasukkan kredensial login mereka pada form yang disediakan.
-                    </li>
-                </ul>
+                <p>
+                    - Halaman login digunakan oleh pengguna dan admin untuk masuk ke sistem.<br>
+                    - Pengguna memasukkan kredensial login mereka pada form yang disediakan.
+                </p>
                 <h5>Halaman Utama</h5>
-                <ul>
-                    <li>
-                        Halaman utama menampilkan informasi umum tentang Desa Tingkir Lor, Cengek.
-                    </li>
-                    <li>
-                        Terdapat foto-foto dari desa wisata untuk memberikan gambaran kepada pengunjung.
-                    </li>
-                    <li>
-                        Navigasi menu utama terletak di bagian atas halaman untuk memudahkan pengunjung mengakses
-                        halaman lain.
-                    </li>
-                </ul>
+                <p>
+                    - Halaman utama menampilkan informasi umum tentang Desa Tingkir Lor, Cengek.<br>
+                    - Terdapat foto-foto dari desa wisata untuk memberikan gambaran kepada pengunjung.<br>
+                    - Navigasi menu utama terletak di bagian atas halaman untuk memudahkan pengunjung mengakses
+                    halaman lain.
+                </p>
                 <h5>Halaman Wisata</h5>
-                <ul>
-                    <li>
-                        Halaman ini berisi informasi detail tentang wisata yang ada di Desa Cengek.
-                    </li>
-                    <li>
-                        Setiap objek wisata dijelaskan secara singkat beserta foto-foto terkait.
-                    </li>
-                    <li>
-                        Pengunjung dapat menjelajahi berbagai pilihan wisata yang ditawarkan.
-                    </li>
-                </ul>
+                <p>
+                    - Halaman ini berisi informasi detail tentang wisata yang ada di Desa Cengek.<br>
+                    - Setiap objek wisata dijelaskan secara singkat beserta foto-foto terkait.<br>
+                    - Pengunjung dapat menjelajahi berbagai pilihan wisata yang ditawarkan.
+                </p>
                 <h5>Halaman Pemesanan Tiket</h5>
-                <ul>
-                    <li>
-                        Halaman pemesanan tiket menampilkan daftar wisata yang tersedia.
-                    </li>
-                    <li>
-                        Pengunjung dapat memilih paket wisata yang diinginkan.
-                    </li>
-                    <li>
-                        Terdapat form pemesanan tiket yang harus diisi oleh pengunjung meliputi
-                        Email,
-                        Nomor HP,
-                        Nama Wisatawan/Ketua Rombongan,
-                        Usia,
-                        Tanggal Kedatangan,
-                        Pilihan Paket Wisata, dan
-                        Jumlah Rombongan.
-                    </li>
-                </ul>
+                <p>
+                    - Halaman pemesanan tiket menampilkan daftar wisata yang tersedia.<br>
+                    - Pengunjung dapat memilih paket wisata yang diinginkan.<br>
+                    - Terdapat form pemesanan tiket yang harus diisi oleh pengunjung meliputi
+                    Email,
+                    Nomor HP,
+                    Nama Wisatawan/Ketua Rombongan,
+                    Usia,
+                    Tanggal Kedatangan,
+                    Pilihan Paket Wisata, dan
+                    Jumlah Rombongan.
+                </p>
                 <h5>Halaman Pengelola (khusus admin)</h5>
-                <ul>
-                    <li>
-                        Setelah login, pada link web http://127.0.0.1:8000/ tambahkan admin di akhir menjadi
-                        http://127.0.0.1:8000//admin, setelah itu akan masuk ke halaman admin
-                    </li>
-                    <li>
-                        Admin dapat mengelola informasi pada halaman utama, halaman wisata, dan halaman pemesanan tiket.
-                    </li>
-                    <li>
-                        Terdapat fitur laporan pemesanan tiket yang menampilkan data pemesanan dalam bentuk tabel
-                    </li>
-                    <li>
-                        Admin dapat melakukan tindakan seperti mengedit, menyimpan, menghapus, dan mengunduh data
-                        pemesanan
-                    </li>
-                </ul>
+                <p>
+                    - Setelah login, pada link web http://127.0.0.1:8000/ tambahkan admin di akhir menjadi
+                    http://127.0.0.1:8000//admin, setelah itu akan masuk ke halaman admin <br>
+
+                    - Admin dapat mengelola informasi pada halaman utama, halaman wisata, dan halaman pemesanan
+                    tiket.<br>
+
+                    - Terdapat fitur laporan pemesanan tiket yang menampilkan data pemesanan dalam bentuk tabel<br>
+
+                    - Admin dapat melakukan tindakan seperti mengedit, menyimpan, menghapus, dan mengunduh data
+                    pemesanan
+                </p>
                 <h5>Laporan Pemesanan Tiket</h5>
-                <ul>
-                    <li>
-                        Laporan pemesanan tiket menampilkan data pemesanan dalam format tabel.
-                    </li>
-                    <li>
-                        Informasi yang ditampilkan meliputi
-                        Tanggal pemesanan,
-                        Email pemesan,
-                        Nomor HP pemesan,
-                        Nama pemesan,
-                        Tanggal kedatangan,
-                        Pilihan paket,
-                        Jumlah orang, dan
-                        Status pemesanan.
-                    </li>
-                    <li>
-                        Admin dapat melakukan tindakan seperti mengedit, menyimpan, menghapus, dan mengunduh data
-                        pemesanan.
-                    </li>
-                </ul>
+                <p>
+                    - Laporan pemesanan tiket menampilkan data pemesanan dalam format tabel.<br>
+
+                    - Informasi yang ditampilkan meliputi
+                    Tanggal pemesanan,
+                    Email pemesan,
+                    Nomor HP pemesan,
+                    Nama pemesan,
+                    Tanggal kedatangan,
+                    Pilihan paket,
+                    Jumlah orang, dan
+                    Status pemesanan.<br>
+
+                    - Admin dapat melakukan tindakan seperti mengedit, menyimpan, menghapus, dan mengunduh data
+                    pemesanan.
+                </p>
             </div>
         </div>
     </div>
@@ -281,6 +257,37 @@
             <a href="https://www.youtube.com/@dewitingkirlor6946" class="text-white fw-bold">Youtube <i
                     class="bi bi-youtube"></i></a>
         </div>
+
+
+
+        <script>
+            
+            const input = document.getElementById("searchInput");
+            input.addEventListener("keyup", () => {
+                const filter = input.value.toUpperCase();
+                const paragraphs = document.querySelectorAll(".search-text p");
+                if (filter === '') {
+                    paragraphs.forEach(p => {
+                        p.innerHTML = p.textContent;
+                    });
+                    return;
+                }
+                paragraphs.forEach(p => {
+                    let txtValue = p.textContent;
+                    if(txtValue.toUpperCase().indexOf(filter) > -1) {
+                        txtValue = txtValue.replace(
+                            new RegExp(filter, "gi"),
+                            '<span class="highlight">$&</span>'
+                        );
+                        p.innerHTML = txtValue;
+                    } else {
+                        p.innerHTML = txtValue;
+                    }
+                });
+            });
+            
+
+        </script>
 
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
