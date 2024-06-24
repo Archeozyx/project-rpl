@@ -58,6 +58,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
 });
 
-Route::get('/pesantiket', function () {
-    return view('pesantiket');
-})->name('pesantiket');
+Route::get('/dokumentasi', function () {
+    return view('dokumentasi');
+})->name('dokumentasi');
