@@ -7,7 +7,7 @@
 
     <form action="{{ route('admin.users') }}" method="GET" class="mb-3">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Cari users..." value="{{ $search }}">
+            <input type="text" name="search" class="form-control mt-3" placeholder="Cari users..." value="{{ $search }}">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>

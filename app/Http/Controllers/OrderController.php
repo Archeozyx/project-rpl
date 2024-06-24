@@ -39,6 +39,6 @@ class OrderController extends Controller
         $ticketOrder->status = 'pending';
         $ticketOrder->save();
 
-        return redirect()->route('pesan');
+        return redirect()->route('home');
     }
 }

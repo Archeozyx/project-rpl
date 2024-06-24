@@ -22,8 +22,7 @@
                   <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
                   <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
                 @else
-                  <li><a class="dropdown-item" href="#">Pengaturan</a></li>
-                  <li><hr class="dropdown-divider"></li>
+                  
                   <li>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
