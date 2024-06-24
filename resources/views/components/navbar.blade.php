@@ -14,6 +14,9 @@
           <a class="nav-link" href="{{ route('wisata') }}">Wisata</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{{ route('forum') }}">Forum</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{ route('dokumentasi') }}">Bantuan</a>
         </li>
         <li class="nav-item dropdown">

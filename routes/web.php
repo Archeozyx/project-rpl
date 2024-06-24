@@ -61,3 +61,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
 Route::get('/dokumentasi', function () {
     return view('dokumentasi');
 })->name('dokumentasi');
+
+Route::get('/forum', function () {
+    return view('forum');
+})->name('forum');
