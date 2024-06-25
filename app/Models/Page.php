@@ -8,9 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'slug',
-        'file_path'
+        'content',
+        'images'
+    ];
+
+    protected $casts = [
+        'images' => 'array',
     ];
 }

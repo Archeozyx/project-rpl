@@ -30,37 +30,41 @@ class AdminController extends Controller
     public function pageInfo($slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
-        return view('admin.page', compact('page'));
+        $content = $page->content;
+        $images = $page->images;
+
+        return view('admin.page', compact('page', 'content', 'images'));
     }
 
     public function updatePageInfo(Request $request, $slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
+        $page->content = $request->input('content');
 
-        $originalFilePath = base_path($page->file_path);
-        $newFilePath = 'resources/views/' . $slug . '_' . time() . '.blade.php';
+        // Handle image updates
+        $updatedImages = $request->input('images', []);
+        $existingImages = $page->images ?? [];
 
-        $content = $request->input('content');
+        foreach ($updatedImages as $key => $imageData) {
+            if (isset($existingImages[$key])) {
+                $existingImages[$key]['data'] = $imageData;
+            } else {
+                $existingImages[] = ['data' => $imageData];
+            }
+        }
 
-        File::put(base_path($newFilePath), $content);
-
-        $page->file_path = $newFilePath;
+        $page->images = $existingImages;
         $page->save();
 
-        return redirect()->route('admin.page', $slug)->with('success', 'Page updated successfully.');
+        return response()->json(['success' => true]);
     }
 
     public function uploadImage(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('uploads', $filename, 'public');
+        $image = $request->file('image');
+        $imageData = base64_encode(file_get_contents($image));
 
-            return response()->json(['url' => asset('storage/' . $path)]);
-        }
-
-        return response()->json(['error' => 'No image found'], 400);
+        return response()->json(['data' => $imageData]);
     }
 
     public function orderReport(Request $request)

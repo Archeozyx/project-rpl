@@ -1,71 +1,96 @@
 @extends('admin.layout')
 
 @section('content')
-<h1>Edit
-    {{ ucfirst($page->slug) }} Page
-</h1>
+    <h1>Edit {{ ucfirst($page->slug) }} Page</h1>
 
-<form action="{{ route('admin.page.update', $page->slug) }}" method="POST">
-    @csrf
-
-    <input type="hidden" name="file_path" value="{{ $page->file_path }}">
-
-    <div class="form-group">
-        <label for="content">Content</label>
-        <textarea name="content" id="summernote">
-                {!! Blade::render(File::get(base_path($page->file_path)), ['filePath' => $page->file_path]) !!}
-            </textarea>
+    <div class="mb-3">
+        <button id="save-button" class="btn btn-primary">Save Changes</button>
+        <button id="reset-button" class="btn btn-warning ml-2">Reset to Original</button>
     </div>
 
-    <button type="submit" class="btn btn-primary">Update</button>
-</form>
+    <div id="editable-content" class="editable">
+        {!! $content !!}
+    </div>
 @endsection
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
-        $('#summernote').summernote({
-            height: 300,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ],
-            callbacks: {
-                onImageUpload: function (files) {
-                    for (let i = 0; i < files.length; i++) {
-                        uploadImage(files[i]);
-                    }
-                }
+    $(document).ready(function() {
+        var editor = new MediumEditor('#editable-content', {
+            toolbar: {
+                buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']
+            },
+            placeholder: {
+                text: 'Type your content here'
             }
         });
 
-        function uploadImage(file) {
-            var formData = new FormData();
-            formData.append('image', file);
+        $('#save-button').click(function() {
+            var content = $('#editable-content').html();
+            var images = [];
 
-            $.ajax({
-                url: '{{ route('admin.upload') }}',
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                success: function (data) {
-                    var image = $('<img>').attr('src', data.url);
-                    $('#summernote').summernote('insertNode', image[0]);
-                },
-                error: function (data) {
-                    console.error(data);
+            $('#editable-content img').each(function(index) {
+                var src = $(this).attr('src');
+                if (src.startsWith('data:image')) {
+                    images.push(src.split(',')[1]);
                 }
             });
-        }
+
+            $.ajax({
+                url: '{{ route("admin.page.update", $page->slug) }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    content: content,
+                    images: images
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Content saved successfully!');
+                    }
+                },
+                error: function() {
+                    alert('An error occurred while saving the content.');
+                }
+            });
+        });
+
+        $('#reset-button').click(function() {
+            if (confirm('Are you sure you want to reset to the original content?')) {
+                location.reload();
+            }
+        });
+
+        // Image upload handling
+        $(document).on('click', '#editable-content img', function() {
+            var $img = $(this);
+            var input = $('<input type="file" accept="image/*" style="display: none;">');
+            input.click();
+
+            input.on('change', function() {
+                var file = this.files[0];
+                var formData = new FormData();
+                formData.append('image', file);
+                formData.append('_token', '{{ csrf_token() }}');
+
+                $.ajax({
+                    url: '{{ route("admin.upload") }}',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $img.attr('src', 'data:image/png;base64,' + response.data);
+                    },
+                    error: function() {
+                        alert('An error occurred while uploading the image.');
+                    }
+                });
+            });
+        });
     });
 </script>
 @endsection

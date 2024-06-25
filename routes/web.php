@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\File;
 
 Route::get('/', function () {
     $page = Page::where('slug', 'home')->firstOrFail();
-    return view('dynamic', ['filePath' => $page->file_path]);
+    return view('dynamic', ['content' => $page->content]);
 })->name('home');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -24,14 +24,14 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/wisata', function () {
     $page = Page::where('slug', 'wisata')->firstOrFail();
-    return view('dynamic', ['filePath' => $page->file_path]);
+    return view('dynamic', ['content' => $page->content]);
 })->name('wisata');
-
 
 Route::get('/pesan', function () {
     $page = Page::where('slug', 'pesan')->firstOrFail();
-    return view('dynamic', ['filePath' => $page->file_path]);
+    return view('dynamic', ['content' => $page->content]);
 })->middleware('auth')->name('pesan');
+
 Route::post('/pesan', [OrderController::class, 'pesan']);
 
 Route::post('/admin/upload', [AdminController::class, 'uploadImage'])->name('admin.upload');
@@ -44,6 +44,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
     Route::get('/edit', [AdminController::class, 'editablePages'])->name('admin.editable-pages');
     Route::get('/edit/{slug}', [AdminController::class, 'pageInfo'])->name('admin.page');
     Route::post('/edit/{slug}', [AdminController::class, 'updatePageInfo'])->name('admin.page.update');
+
 
     // Laporan Pemesanan Tiket
     Route::get('/report', [AdminController::class, 'orderReport'])->name('admin.report');
