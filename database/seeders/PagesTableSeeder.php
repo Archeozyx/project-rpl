@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Page;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class PagesTableSeeder extends Seeder
 {
@@ -13,14 +14,19 @@ class PagesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        $pages = [
-            ['slug' => 'home', 'file_path' => 'resources/views/home.blade.php'],
-            ['slug' => 'pesan', 'file_path' => 'resources/views/pesan.blade.php'],
-            ['slug' => 'wisata', 'file_path' => 'resources/views/wisata.blade.php'],
-        ];
+        $pages = ['home', 'pesan', 'wisata'];
+
         foreach ($pages as $page) {
-            Page::create($page);
+            $filePath = resource_path("views/{$page}.blade.php");
+
+            if (File::exists($filePath)) {
+                $content = File::get($filePath);
+
+                Page::updateOrCreate(
+                    ['slug' => $page],
+                    ['content' => $content]
+                );
+            }
         }
     }
 }

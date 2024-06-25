@@ -30,75 +30,34 @@ class AdminController extends Controller
     public function pageInfo($slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
-        return view('admin.page', compact('page'));
+        $content = $page->content;
+
+        if (empty($content)) {
+            $filePath = resource_path("views/{$slug}.blade.php");
+            if (File::exists($filePath)) {
+                $content = File::get($filePath);
+            }
+        }
+
+        return view('admin.page', compact('page', 'content'));
     }
 
     public function updatePageInfo(Request $request, $slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
-
-        $originalFilePath = base_path($page->file_path);
-        $newFilePath = 'resources/views/' . $slug . '_' . time() . '.blade.php';
-
-        $content = $request->input('content');
-
-        File::put(base_path($newFilePath), $content);
-
-        // Store the previous file path before updating
-        $previousFilePath = $page->file_path;
-        $page->previous_file_path = $previousFilePath;
-
-        $page->file_path = $newFilePath;
+        $page->content = $request->input('content');
         $page->save();
 
-        return redirect()->route('admin.page', $slug)->with('success', 'Page updated successfully.');
-    }
-
-    public function revertPage($slug)
-    {
-        $page = Page::where('slug', $slug)->firstOrFail();
-
-        if ($page->previous_file_path) {
-            // Revert to the previous file
-            $page->file_path = $page->previous_file_path;
-            $page->previous_file_path = null;
-            $page->save();
-
-            return redirect()->route('admin.page', $slug)->with('success', 'Page reverted to previous version.');
-        }
-
-        return redirect()->route('admin.page', $slug)->with('error', 'No previous version available.');
-    }
-
-    public function resetPage($slug)
-    {
-        $page = Page::where('slug', $slug)->firstOrFail();
-
-        // Reset to the default file
-        $defaultFilePath = 'resources/views/' . $slug . '.blade.php';
-
-        if (File::exists(base_path($defaultFilePath))) {
-            $page->file_path = $defaultFilePath;
-            $page->previous_file_path = null;
-            $page->save();
-
-            return redirect()->route('admin.page', $slug)->with('success', 'Page reset to default version.');
-        }
-
-        return redirect()->route('admin.page', $slug)->with('error', 'Default version not found.');
+        return response()->json(['success' => true]);
     }
 
     public function uploadImage(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('uploads', $filename, 'public');
+        $image = $request->file('image');
+        $imageData = base64_encode(file_get_contents($image));
+        $src = 'data:' . $image->getMimeType() . ';base64,' . $imageData;
 
-            return response()->json(['url' => asset('storage/' . $path)]);
-        }
-
-        return response()->json(['error' => 'No image found'], 400);
+        return response()->json(['src' => $src]);
     }
 
     public function orderReport(Request $request)

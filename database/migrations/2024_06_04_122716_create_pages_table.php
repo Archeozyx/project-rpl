@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('file_path')->nullable();
-            $table->string('previous_file_path')->nullable();
+            $table->longText('content');
             $table->timestamps();
         });
     }
