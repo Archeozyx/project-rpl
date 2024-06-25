@@ -44,10 +44,48 @@ class AdminController extends Controller
 
         File::put(base_path($newFilePath), $content);
 
+        // Store the previous file path before updating
+        $previousFilePath = $page->file_path;
+        $page->previous_file_path = $previousFilePath;
+
         $page->file_path = $newFilePath;
         $page->save();
 
         return redirect()->route('admin.page', $slug)->with('success', 'Page updated successfully.');
+    }
+
+    public function revertPage($slug)
+    {
+        $page = Page::where('slug', $slug)->firstOrFail();
+
+        if ($page->previous_file_path) {
+            // Revert to the previous file
+            $page->file_path = $page->previous_file_path;
+            $page->previous_file_path = null;
+            $page->save();
+
+            return redirect()->route('admin.page', $slug)->with('success', 'Page reverted to previous version.');
+        }
+
+        return redirect()->route('admin.page', $slug)->with('error', 'No previous version available.');
+    }
+
+    public function resetPage($slug)
+    {
+        $page = Page::where('slug', $slug)->firstOrFail();
+
+        // Reset to the default file
+        $defaultFilePath = 'resources/views/' . $slug . '.blade.php';
+
+        if (File::exists(base_path($defaultFilePath))) {
+            $page->file_path = $defaultFilePath;
+            $page->previous_file_path = null;
+            $page->save();
+
+            return redirect()->route('admin.page', $slug)->with('success', 'Page reset to default version.');
+        }
+
+        return redirect()->route('admin.page', $slug)->with('error', 'Default version not found.');
     }
 
     public function uploadImage(Request $request)

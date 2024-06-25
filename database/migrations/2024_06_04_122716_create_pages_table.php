@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->string('file_path')->nullable();
+            $table->string('previous_file_path')->nullable();
             $table->timestamps();
         });
     }

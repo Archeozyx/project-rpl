@@ -44,6 +44,9 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
     Route::get('/edit', [AdminController::class, 'editablePages'])->name('admin.editable-pages');
     Route::get('/edit/{slug}', [AdminController::class, 'pageInfo'])->name('admin.page');
     Route::post('/edit/{slug}', [AdminController::class, 'updatePageInfo'])->name('admin.page.update');
+    Route::post('/edit/{slug}/revert', [AdminController::class, 'revertPage'])->name('admin.page.revert');
+    Route::post('/edit/{slug}/reset', [AdminController::class, 'resetPage'])->name('admin.page.reset');
+
 
     // Laporan Pemesanan Tiket
     Route::get('/report', [AdminController::class, 'orderReport'])->name('admin.report');
