@@ -58,7 +58,7 @@
                     <div class="mb-3">
                         <label for="tickets" class="form-label">Jumlah Tiket</label>
                         <input type="number" class="form-control" id="tickets" name="tickets" min="1"
-                            placeholder="Masukkan jumlah tiket yang diinginkan" required>
+                            placeholder="Masukkan jumlah tiket yang diinginkan" required oninput="calculateTotal()">
                     </div>
                     <div class="mb-3">
                         <label for="date" class="form-label">Tanggal Acara</label>
@@ -68,10 +68,16 @@
                         <label for="time" class="form-label">Waktu Acara</label>
                         <input type="time" class="form-control" id="time" name="time" required>
                     </div>
+
+                    <div class="mb-3">
+                        <p id="totalPrice">Total Harga = Rp0</p>
+                    </div>
+
                     <button type="submit" class="btn btn-primary mb-5">Pesan Tiket</button>
                 </form>
             </div>
         </div>
+
 
         <div class="container-flex">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -80,6 +86,23 @@
                 </path>
             </svg>
         </div>
+
+        <script>
+            function calculateTotal() {
+                const ticketPrice = 40000;
+                const ticketsInput = document.getElementById('tickets');
+                const totalPriceElement = document.getElementById('totalPrice');
+
+                const numberOfTickets = parseInt(ticketsInput.value) || 0;
+                const totalPrice = numberOfTickets * ticketPrice;
+
+                totalPriceElement.textContent = 'Total Harga: Rp' + totalPrice.toLocaleString();
+            }
+        </script>
+
+
+
+
 
         <footer class="pb-5 text-white text-center" style="background-color: #273044;">
             <h4 class="display-7">Desa Wisata Tingkir Lor</h4>

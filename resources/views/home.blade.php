@@ -64,7 +64,7 @@
   <section id="galeri" style="background-color: #e2edff;">
     <div class="container">
       <div class="row text-center justify-content-center">
-        <div class="col-md-12 mb-5">
+        <div class="col-md-12 mb-2">
           <h3 class="display-6">Galeri</h3>
         </div>
         <div class="col-md-4 mb-4">
