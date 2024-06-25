@@ -211,19 +211,23 @@
                     Pilihan Paket Wisata, dan
                     Jumlah Rombongan.
                 </p>
-                <h5>Halaman Pengelola (khusus admin)</h5>
-                <p>
-                    - Setelah login, pada link web http://127.0.0.1:8000/ tambahkan admin di akhir menjadi
-                    http://127.0.0.1:8000//admin, setelah itu akan masuk ke halaman admin <br>
+                @auth
+                @if(auth()->user()->privilege === 'admin')
+                    <h5>Halaman Pengelola (khusus admin)</h5>
+                    <p>
+                        - Setelah login, pada link web tambahkan admin di akhir menjadi
+                        /admin, setelah itu akan masuk ke halaman admin <br>
 
-                    - Admin dapat mengelola informasi pada halaman utama, halaman wisata, dan halaman pemesanan
-                    tiket.<br>
+                        - Admin dapat mengelola informasi pada halaman utama, halaman wisata, dan halaman pemesanan
+                        tiket.<br>
 
-                    - Terdapat fitur laporan pemesanan tiket yang menampilkan data pemesanan dalam bentuk tabel<br>
+                        - Terdapat fitur laporan pemesanan tiket yang menampilkan data pemesanan dalam bentuk tabel<br>
 
-                    - Admin dapat melakukan tindakan seperti mengedit, menyimpan, menghapus, dan mengunduh data
-                    pemesanan
-                </p>
+                        - Admin dapat melakukan tindakan seperti mengedit, menyimpan, menghapus, dan mengunduh data
+                        pemesanan
+                    </p>
+                @endif
+            @endauth
                 <h5>Laporan Pemesanan Tiket</h5>
                 <p>
                     - Laporan pemesanan tiket menampilkan data pemesanan dalam format tabel.<br>

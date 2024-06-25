@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -62,6 +63,8 @@ Route::get('/dokumentasi', function () {
     return view('dokumentasi');
 })->name('dokumentasi');
 
-Route::get('/forum', function () {
-    return view('forum');
-})->name('forum');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+    Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
+    Route::post('/forum/{post}/comment', [ForumController::class, 'storeComment'])->name('forum.comment');
+});

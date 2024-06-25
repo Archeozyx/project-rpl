@@ -41,6 +41,17 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    public function forumPosts()
+    {
+        return $this->hasMany(ForumPost::class);
+    }
+
+    public function forumComments()
+    {
+        return $this->hasMany(ForumComment::class);
+    }
+    
     protected function casts(): array
     {
         return [
