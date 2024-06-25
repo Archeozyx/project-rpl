@@ -3,15 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Page;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
 class PagesTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $pages = ['home', 'pesan', 'wisata'];
@@ -22,9 +18,26 @@ class PagesTableSeeder extends Seeder
             if (File::exists($filePath)) {
                 $content = File::get($filePath);
 
+                // Extract image paths from the content
+                preg_match_all('/src=["\'](.+?)["\']/', $content, $matches);
+                $imagePaths = $matches[1];
+
+                $images = [];
+                foreach ($imagePaths as $path) {
+                    if (File::exists(public_path($path))) {
+                        $images[] = [
+                            'path' => $path,
+                            'data' => base64_encode(File::get(public_path($path)))
+                        ];
+                    }
+                }
+
                 Page::updateOrCreate(
                     ['slug' => $page],
-                    ['content' => $content]
+                    [
+                        'content' => $content,
+                        'images' => $images
+                    ]
                 );
             }
         }

@@ -3,12 +3,14 @@
 @section('content')
     <h1>Edit {{ ucfirst($page->slug) }} Page</h1>
 
+    <div class="mb-3">
+        <button id="save-button" class="btn btn-primary">Save Changes</button>
+        <button id="reset-button" class="btn btn-warning ml-2">Reset to Original</button>
+    </div>
+
     <div id="editable-content" class="editable">
         {!! $content !!}
     </div>
-
-    <button id="save-button" class="btn btn-primary mt-3">Save Changes</button>
-    <button id="reset-button" class="btn btn-warning mt-3 ml-2">Reset to Original</button>
 @endsection
 
 @section('scripts')
@@ -25,12 +27,22 @@
 
         $('#save-button').click(function() {
             var content = $('#editable-content').html();
+            var images = [];
+
+            $('#editable-content img').each(function(index) {
+                var src = $(this).attr('src');
+                if (src.startsWith('data:image')) {
+                    images.push(src.split(',')[1]);
+                }
+            });
+
             $.ajax({
                 url: '{{ route("admin.page.update", $page->slug) }}',
                 method: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    content: content
+                    content: content,
+                    images: images
                 },
                 success: function(response) {
                     if (response.success) {
@@ -71,7 +83,7 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        $img.attr('src', response.src);
+                        $img.attr('src', 'data:image/png;base64,' + response.data);
                     },
                     error: function() {
                         alert('An error occurred while uploading the image.');

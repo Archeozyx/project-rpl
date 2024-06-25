@@ -31,21 +31,29 @@ class AdminController extends Controller
     {
         $page = Page::where('slug', $slug)->firstOrFail();
         $content = $page->content;
+        $images = $page->images;
 
-        if (empty($content)) {
-            $filePath = resource_path("views/{$slug}.blade.php");
-            if (File::exists($filePath)) {
-                $content = File::get($filePath);
-            }
-        }
-
-        return view('admin.page', compact('page', 'content'));
+        return view('admin.page', compact('page', 'content', 'images'));
     }
 
     public function updatePageInfo(Request $request, $slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
         $page->content = $request->input('content');
+
+        // Handle image updates
+        $updatedImages = $request->input('images', []);
+        $existingImages = $page->images ?? [];
+
+        foreach ($updatedImages as $key => $imageData) {
+            if (isset($existingImages[$key])) {
+                $existingImages[$key]['data'] = $imageData;
+            } else {
+                $existingImages[] = ['data' => $imageData];
+            }
+        }
+
+        $page->images = $existingImages;
         $page->save();
 
         return response()->json(['success' => true]);
@@ -55,9 +63,8 @@ class AdminController extends Controller
     {
         $image = $request->file('image');
         $imageData = base64_encode(file_get_contents($image));
-        $src = 'data:' . $image->getMimeType() . ';base64,' . $imageData;
 
-        return response()->json(['src' => $src]);
+        return response()->json(['data' => $imageData]);
     }
 
     public function orderReport(Request $request)
